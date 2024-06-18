@@ -1,6 +1,10 @@
 #include <memory>
 #include <map>
+#include <string>
+#include <iostream>
+#include <utility>
 
+class TrieNode;
 typedef std::map<char, std::shared_ptr<TrieNode>> Cluster;
 
 class TrieNode
@@ -29,18 +33,17 @@ public:
     }
 };
 
-template <class T>
 class TrieNodeWithValue : public TrieNode
 {
 public:
-    std::shared_ptr<T> value_;
+    std::shared_ptr<std::string> value_;
 
-    explicit TrieNodeWithValue(std::shared_ptr<T> value) : value_(std::move(value))
+    explicit TrieNodeWithValue(std::shared_ptr<std::string> value) : value_(std::move(value))
     {
         this->is_value_node_ = true;
     }
 
-    TrieNodeWithValue(Cluster node, std::shared_ptr<T> value) : TrieNode(std::move(node)), value_(std::move(value))
+    TrieNodeWithValue(Cluster node, std::shared_ptr<std::string> value) : TrieNode(std::move(node)), value_(std::move(value))
     {
         this->is_value_node_ = true;
     }
@@ -48,17 +51,16 @@ public:
 
 class Trie
 {
-private:
+public:
     std::shared_ptr<TrieNode> root_{nullptr};
 
-public:
     Trie() = default;
 
-    template <class T>
-    void Put(std::string &key, T value);
+    void Put(std::string key, std::string value);
 
-    template <class T>
-    T Get(std::string &key);
+    std::string Get(std::string key);
 
-    void Remove(std::string &key);
+    void Remove(std::string key);
+
+    void Visualise();
 };
