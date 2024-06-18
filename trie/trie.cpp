@@ -14,6 +14,7 @@ void Trie::Put(std::string key, std::string value)
     {
         if (!parent_node->hasChild(*it))
         {
+
             new_node = std::make_shared<TrieNode>();
             parent_node->node_[*it] = new_node;
             parent_node = new_node;
@@ -28,11 +29,14 @@ void Trie::Put(std::string key, std::string value)
     if (key.empty() || !parent_node->hasChild(*it))
     {
         parent_node->node_[*it] = std::make_shared<TrieNodeWithValue>(value_ptr);
+        std::cout << "Putting value at:" << parent_node->node_[*it] << std::endl;
     }
     else
     {
         auto node = parent_node->getChildNode(*it);
         parent_node->node_[*it] = std::make_shared<TrieNodeWithValue>(node->node_, value_ptr);
+        std::cout << "Putting value at:" << parent_node->node_[*it] << std::endl;
+    
     }
 }
 
@@ -51,7 +55,8 @@ std::string Trie::Get(std::string key)
             return "";
         }
         auto node = root_->getChildNode(c);
-        if(node == nullptr){
+        if (node == nullptr)
+        {
             return "";
         }
     }

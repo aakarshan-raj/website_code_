@@ -29,7 +29,7 @@ public:
         {
             return nullptr;
         }
-        node_.find(c)->second;
+        return node_.find(c)->second;
     }
 };
 
