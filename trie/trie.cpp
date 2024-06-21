@@ -29,14 +29,11 @@ void Trie::Put(std::string key, std::string value)
     if (key.empty() || !parent_node->hasChild(*it))
     {
         parent_node->node_[*it] = std::make_shared<TrieNodeWithValue>(value_ptr);
-        std::cout << "Putting value at:" << parent_node->node_[*it] << std::endl;
     }
     else
     {
         auto node = parent_node->getChildNode(*it);
         parent_node->node_[*it] = std::make_shared<TrieNodeWithValue>(node->node_, value_ptr);
-        std::cout << "Putting value at:" << parent_node->node_[*it] << std::endl;
-    
     }
 }
 
@@ -44,23 +41,25 @@ std::string Trie::Get(std::string key)
 {
     if (root_ == nullptr)
     {
-        return "";
+        return "key doesn't exists";
     }
-
+    auto node = root_;
     for (char &c : key)
     {
-        if (!root_->hasChild(c))
+
+        if (!node->hasChild(c))
         {
-            std::cout << "key doesn't exists" << std::endl;
-            return "";
+            return "key doesn't exists";
         }
-        auto node = root_->getChildNode(c);
+        node = node->getChildNode(c);
         if (node == nullptr)
         {
-            return "";
+            return "key doesn't exists";
         }
     }
-    return "not null";
+    auto node_value = std::dynamic_pointer_cast<TrieNodeWithValue>(node);
+
+    return *node_value->value_;
 }
 
 void Trie::Remove(std::string key)

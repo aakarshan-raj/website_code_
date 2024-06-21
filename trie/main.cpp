@@ -3,18 +3,16 @@
 int main()
 {
     Trie root = Trie();
-    // root.root_ = std::make_shared<TrieNode>();
-    // std::shared_ptr<std::string> data = std::make_shared<std::string>("aakarshan");
-    // root.root_->node_['a'] = std::make_shared<TrieNodeWithValue>(data);
 
-    // auto value_node = std::dynamic_pointer_cast<TrieNodeWithValue>(root.root_->node_['a']);
-
-    // std::cout << *value_node->value_ << std::endl;
     root.Put("abc", "alphabet");
-    root.Put("abc", "alphabet");
+    root.Put("a", "alphabetx");
+    root.Put("ab", "alphabety");
+    root.Put("b", "alphabetz");
 
-    auto node_value = std::dynamic_pointer_cast<TrieNodeWithValue>(root.root_->node_['a']->node_['b']->node_['c']);
+    std::cout << root.Get("abc") << std::endl;
+    std::cout << root.Get("ab") << std::endl;
+    std::cout << root.Get("a") << std::endl;
+    std::cout << root.Get("b") << std::endl;
 
-    std::cout<<*node_value->value_<<std::endl;
     return 0;
 }

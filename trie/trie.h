@@ -13,7 +13,7 @@ public:
     Cluster node_;
     bool is_value_node_{false};
 
-    TrieNode(Cluster node) : node_(std::move(node_)) {}
+    TrieNode(Cluster node) : node_(std::move(node)) {}
 
     TrieNode() = default;
     virtual ~TrieNode() = default;
