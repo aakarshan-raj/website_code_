@@ -58,10 +58,37 @@ std::string Trie::Get(std::string key)
         }
     }
     auto node_value = std::dynamic_pointer_cast<TrieNodeWithValue>(node);
-
-    return *node_value->value_;
+    if (node_value->is_value_node_)
+    {
+        return *node_value->value_;
+    }
+    return "Key doesn't exists";
 }
 
-void Trie::Remove(std::string key)
+bool Trie::Remove(std::string key)
 {
+    if (root_ == nullptr)
+    {
+        return false;
+    }
+    auto node = root_;
+    for (char &c : key)
+    {
+        if (!node->hasChild(c))
+        {
+            return false;
+        }
+        node = node->getChildNode(c);
+        if (node == nullptr)
+        {
+            return false;
+        }
+    }
+    if (node->is_value_node_)
+    {
+        node->is_value_node_ = false;
+        std::dynamic_pointer_cast<TrieNodeWithValue>(node)->value_ = nullptr;
+        return true;
+    }
+    return false;
 }

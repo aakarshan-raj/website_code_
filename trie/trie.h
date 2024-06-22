@@ -60,7 +60,7 @@ public:
 
     std::string Get(std::string key);
 
-    void Remove(std::string key);
+    bool Remove(std::string key);
 
     void Visualise();
 };
